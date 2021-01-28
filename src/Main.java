@@ -1,14 +1,26 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
+        // My main HashMap which acts as a "bridge between" the processor and display
         HashMap<Float, Float> coords = new HashMap<>();
-        coords.put(0f, 0f);
-        coords.put(1f, 1f);
-        coords.put(2f, 4f);
-        coords.put(3f, 9f);
-        coords.put(4f, 16f);
-        coords.put(5f, 25f);
+        String line= "";
+
+        // Getting the input and storing it in the line
+        System.out.print("What is your function? ");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            line = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Creating the display and processor classes and passing in their
+        // respective paramaters
+        Processor processor = new Processor(coords, line);
         Display display = new Display(coords);
         display.outputTable();
     }
