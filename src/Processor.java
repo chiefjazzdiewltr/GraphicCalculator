@@ -15,7 +15,6 @@ public class Processor {
         float[] xs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         float[] ys = new float[xs.length];
         boolean negate = false;
-        double result = 0;
         // Assuming layout is 2x^2 + 1 or something similar
         if(function.contains("x")) {
             for (String token : tokens) {
@@ -26,21 +25,33 @@ public class Processor {
                         System.out.println(zeroP);
                         int power = 0;
                         int coefficient = 0;
-                        if(token.charAt(zeroP + 1) == '^') power = Integer.parseInt(String.valueOf(token.charAt(zeroP + 2)));
-                        if(Character.isDigit(token.charAt(zeroP - 1))) coefficient = Integer.parseInt(String.valueOf(token.charAt(zeroP - 1)));
+                        if(token.charAt(zeroP + 1) == '^'){
+                            System.out.println(token.substring(zeroP + 2));
+                            try {
+                                power = Integer.parseInt(token.substring(zeroP + 2));
+                            }
+                            catch(NumberFormatException e) {
+                                power = 0;
+                            }
+                        }
+                        if(Character.isDigit(token.charAt(zeroP - 1))) {
+                            try{
+                                coefficient = Integer.parseInt(token.substring(0, zeroP - 1));
+                            }
+                            catch(NumberFormatException e) {
+                                coefficient = 0;
+                            }
+                        }
 
                         for(int i = 0; i < xs.length; i++) {
                             double piece = Math.pow(xs[i], power);
-                            piece = piece * coefficient;
-                            result += piece;
-                            ys[i] = (float) piece;
+                            if(negate) piece = -1 * piece * coefficient;
+                            else piece = piece * coefficient;
+                            ys[i] += (float) piece;
                         }
                         System.out.println("Power: " + power + " Coefficient: " + coefficient);
                     }
                 }
-
-                //negate = !negate;
-                //for(int i = 0; i < xs.length; i++) ys[i] = (float) result;
             }
         }
         HashMap<Float, Float> coordinates = new HashMap<>();
