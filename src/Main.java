@@ -18,10 +18,10 @@ public class Main {
         }
 
         // Creating the display and processor classes and passing in their
-        // respective paramaters
+        // respective parameters
         Processor processor = new Processor(line);
         HashMap<Float, Float> coords = processor.process();
-        Display display = new Display(coords);
-        display.outputTable();
+        // Display display = new Display(coords);
+        //display.outputTable();
     }
 }
