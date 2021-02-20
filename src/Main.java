@@ -6,7 +6,6 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) {
         // My main HashMap which acts as a "bridge between" the processor and display
-        HashMap<Float, Float> coords = new HashMap<>();
         String line= "";
 
         // Getting the input and storing it in the line
@@ -20,7 +19,8 @@ public class Main {
 
         // Creating the display and processor classes and passing in their
         // respective paramaters
-        Processor processor = new Processor(coords, line);
+        Processor processor = new Processor(line);
+        HashMap<Float, Float> coords = processor.process();
         Display display = new Display(coords);
         display.outputTable();
     }
