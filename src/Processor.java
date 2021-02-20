@@ -11,24 +11,29 @@ public class Processor {
      * @return A hashmap of all the coordinates
      */
     public HashMap<Float, Float> process() {
-        List<String> tokens = Arrays.asList(function.split(" ")); // List storing all the function components
+        String[] tokens = function.split(" "); // List storing all the function components
         float[] xs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // Float array for the x coordinates
         float[] ys = new float[xs.length]; // Float array for the y coordinates
         boolean negate = false;
         // Assuming layout is 2x^2 + 1 or something similar
         if(function.contains("x")) {
             for (String token : tokens) { // For each loop that goes through each token in the function string
-                if (token.equals("-")) negate = !negate;
+                if (token.equals("-")) negate = true;
+                else if (token.equals("+")) negate = false;
                 else {
                     if(token.contains("x")) { // If statements that starts the whole tokenization processing system
                         int zeroP = token.indexOf("x");
-                        double power = 0;
-                        double coefficient = 0;
+                        double power;
+                        double coefficient;
                         // This section is for Powers
                         if(zeroP < token.length() - 1) power = Double.parseDouble(token.substring(zeroP + 2)); // Actually gets the power
                         else power = 1;
                         // This section is for Coefficients
-                        if(zeroP > 0) coefficient = Double.parseDouble(token.substring(0, zeroP)); // Actually gets the coefficient
+                        if(zeroP > 0)
+                        {
+                            if (token.substring(0, zeroP).equals("-")) coefficient = -1;
+                            else coefficient = Double.parseDouble(token.substring(0, zeroP)); // Actually gets the coefficient
+                        }
                         else coefficient = 1;
 
                         // For loop that actually does all the math stuff
