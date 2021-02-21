@@ -1,11 +1,10 @@
 import java.util.TreeMap;
-import java.util.Formatter;
 
 /**
  * This class handles all the displaying of all the table information in a nice easy to read format.
  */
 public class Display {
-    private TreeMap<Float, Float> coords;
+    private final TreeMap<Float, Float> coords;
 
     /**
      * This constructor is nothing more than getting the hashmap from the processor and storing it as a reference
