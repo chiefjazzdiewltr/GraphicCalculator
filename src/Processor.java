@@ -28,18 +28,12 @@ public class Processor {
                         int zeroP;
                         double power;
                         double coefficient;
-                        int endDiff = token.length();
-                        // Special case handling
-                        if (token.contains("e")) {
-                            zeroP = token.indexOf("e");
-                            endDiff = token.length()-1;
-                        }
-                        else zeroP = token.indexOf("x");
+                        zeroP = token.indexOf("x");
 
                         // This section is for Powers
                         if (zeroP < token.length() - 1) {
                             if(token.substring(zeroP + 2).equals("x")) power = 1;
-                            else power = Double.parseDouble(token.substring(zeroP + 2, endDiff)); // Actually gets the power
+                            else power = Double.parseDouble(token.substring(zeroP + 2)); // Actually gets the power
                         }
                         else power = 1;
                         // This section is for Coefficients
@@ -49,23 +43,15 @@ public class Processor {
                             else coefficient = Double.parseDouble(token.substring(0, zeroP)); // Actually gets the coefficient
                         }
                         else coefficient = 1;
-
-                        // For loop that handles special e function
-                        if (token.contains("e")) {
-                            for (int i = 0; i < xs.length; i++) {
-                                double piece = Math.exp(power * xs[i]);
-                                if (negate) piece *= -1 * coefficient;
-                                else piece *= coefficient;
-                                ys[i] += (float) piece;
-                            }
+                        if(token.contains("(") & token.contains(")")) {
+                            String funcName = token.substring(0, token.indexOf("("));
+                            System.out.println(funcName);
                         }
-                        else { // For loop that handles the polynomials
-                            for (int i = 0; i < xs.length; i++) {
-                                double piece = Math.pow(xs[i], power);
-                                if (negate) piece *= -1 * coefficient;
-                                else piece *= coefficient;
-                                ys[i] += (float) piece;
-                            }
+                        for (int i = 0; i < xs.length; i++) {
+                            double piece = Math.pow(xs[i], power);
+                            if (negate) piece *= -1 * coefficient;
+                            else piece *= coefficient;
+                            ys[i] += (float) piece;
                         }
                     }
                 }
